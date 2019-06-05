@@ -1,0 +1,71 @@
+scalar DateTime
+
+type Query {
+  schools(locationCode:String): [School]
+  school(schoolCode:String!):School!
+  hasUsername(username:String!):Boolean
+  statistics:[Statistic]
+  me:User
+}
+
+type Mutation {
+  signup(username: String!, password: String!, 
+    name: String!,accountType:String!,account:String!,schoolCode:String!
+    ): AuthPayload
+  login(username: String!, password: String!): AuthPayload
+  createLocations(username:String!):Location
+  createStudents:[Student]
+  createStatistics:[Statistic]
+}
+
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  username: String!
+  accountType:String!
+  account:String!
+  school:School!
+  statistics:[Statistic]
+  createTime:DateTime
+}
+
+type Location{
+  id: ID!
+  code:String!
+  name:String!
+  schools:[School!]!
+}
+
+type Statistic {
+  id: ID!
+  date:DateTime
+  school:School
+  studentsNum: Int!
+  validNum: Int!
+  user:User
+  settlement: Boolean
+}
+
+type Student {
+  id:ID!
+  userId:String!
+  schoolName:String!
+  locationCode:String!
+}
+
+type School {
+  id: ID!
+  name: String!
+  code: String!
+  hasAgent:Boolean!
+  user: User
+  location:Location
+}
+
+

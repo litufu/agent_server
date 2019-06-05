@@ -1,0 +1,47 @@
+type User {
+  id: ID! @id
+  name: String!
+  username: String! @unique
+  password: String!
+  accountType:String!
+  account:String!
+  school:School! @relation(link: INLINE)
+  statistics:[Statistic!]!
+  createTime:DateTime
+}
+
+
+type Location{
+  id: ID! @id
+  code:String! @unique
+  name:String! @unique
+  schools:[School!]!
+}
+
+type Statistic {
+  id: ID! @id
+  date:DateTime
+  school:School
+  studentsNum: Int!
+  validNum: Int!
+  user:User
+  settlement: Boolean
+}
+
+type Student {
+  id:ID! @id
+  userId:String! @unique
+  schoolName:String!
+  locationCode:String!
+}
+
+
+type School {
+  id: ID! @id
+  name: String!
+  code: String! @unique
+  hasAgent:Boolean!
+  user: User
+  location:Location
+}
+

@@ -1,0 +1,10 @@
+endpoint: http://192.168.99.100:4477
+datamodel: datamodel.prisma
+
+secret: mysecret123 # your API secret
+
+# Specifies the language and directory for the generated Prisma client.
+generate:
+  - generator: javascript-client
+    output: ../src/generated/prisma-client
+

@@ -40,7 +40,6 @@ async function createStudents(parent, args, context) {
           schoolName:student.studies[0].school.name,
           locationCode:student.studies[0].school.location.area.code
         })
-        console.log(newStudent)
       }
       
     }
@@ -54,8 +53,6 @@ async function createStatistics(parent, args, context){
   for(const school of schools){
     const schoolSeller = await context.prisma.school({id:school.id}).user()
     if(schoolSeller){
-      console.log(school)
-      console.log(schoolSeller)
       const schoolLocation = await context.prisma.school({id:school.id}).location()
       const students = await context.prisma.students({
         where:{
@@ -113,12 +110,10 @@ async function createStatistic(schoolCode,schoolSellerId,context){
 
 
 async function createLocations(parent, args, context) {
-  console.log(args.username)
   try {
     const file = await readFile(gaozhongFile, 'utf8')
     const results = await parseCsv(file)
     for (const value of results.data) {
-      console.log(value)
       const areaName = value[6]
       const areaCode = value[7]
       const schoolName = value[8]
@@ -139,7 +134,6 @@ async function createLocations(parent, args, context) {
                },
           }
         })
-        console.log(location)
       }else{
         const school = await context.prisma.school({ code: schoolCode })
         if(!school){
@@ -153,7 +147,6 @@ async function createLocations(parent, args, context) {
                    },
               }
             })
-            console.log(newschool)
         }
       }
 
@@ -168,7 +161,6 @@ async function createLocations(parent, args, context) {
 async function signup(parent, args, context) {
   const password = await bcrypt.hash(args.password, 10)+ ""
   const now = moment().toISOString()
-  console.log(now)
   const user = await context.prisma.createUser({ 
     name:args.name+ "", 
     username:args.username+ "",
@@ -197,7 +189,6 @@ async function signup(parent, args, context) {
 }
 
 async function login(parent, args, context) {
-  console.log('password',args)
   const user = await context.prisma.user({ username: args.username })
   if (!user) {
     throw new Error('No such user found')

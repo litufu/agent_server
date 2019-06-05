@@ -14,7 +14,7 @@ type User {
 type Location{
   id: ID! @id
   code:String! @unique
-  name:String! @unique
+  name:String! 
   schools:[School!]!
 }
 
